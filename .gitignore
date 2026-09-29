@@ -1,0 +1,10 @@
+# Godot 4
+.godot/
+/android/
+
+# Exportaciones locales (los builds no se suben al repositorio)
+builds/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
