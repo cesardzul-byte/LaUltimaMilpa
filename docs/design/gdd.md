@@ -1,318 +1,189 @@
-# Game Design Document — La Última Milpa (Prototipo Nivel 1: Dzibilchaltún)
+# GDD — La Última Milpa (nivel 1: Dzibilchaltún)
 
-Versión: 0.1 (valores iniciales — balance final en ISS-52)  
-Motor: Godot 4.x | Resolución base: 480×270 (×4 entero) | Pixel art, paleta ≤32 colores
+Versión 0.2. Valores iniciales; el balance final se hace en ISS-52. Términos y grafías según `docs/culture/glosario.md`. Todos los números están en la §12.
 
----
+## 1. Bucle del día
 
-## 1. Bucle del día y duración de fases
+| Fase | Duración | Qué se hace |
+|---|---|---|
+| Mañana | 100 s | Sembrar, regar, cosechar, alimentar pavos, reparar albarradas |
+| Tarde | 70 s | Mercado (casa), ofrenda en el templo (mapa regional) |
+| Atardecer | 30 s | Colocar antorchas de copal; ofrenda de saka' en el altar |
+| Noche | 110 s | Oleada de wáay; al terminar el tiempo, los que quedan se retiran |
+| Amanecer | 20 s | Resumen en numeración maya; los cultivos crecen; el agua se rellena; `GameState.snapshot()` |
 
-Un día = 4 fases jugables + transición de amanecer. Duración total objetivo: **4:30–5:00 min**.
+**Total: 330 s = 5:30 min.** El nivel dura 5 días.
 
-| Fase | Duración | Actividad principal | Transición |
-|------|----------|---------------------|------------|
-| **Mañana** | 100 s | Sembrar, regar, cosechar, alimentar pavos, reparar defensas | EventBus `phase_changed(MORNING → AFTERNOON)` |
-| **Tarde** | 70 s | Mercado (trueque cacao), preparar ofrenda saka', colocar/reparar defensas | `phase_changed(AFTERNOON → DUSK)` |
-| **Atardecer** | 30 s | Colocación final de defensas, encender antorchas copal | `phase_changed(DUSK → NIGHT)` |
-| **Noche** | 110 s | Oleadas de criaturas (Wáay Pek', Aluxes, Wáay Kot, Jefe) | `phase_changed(NIGHT → DAWN)` + `wave_cleared` |
-| **Amanecer** | 20 s | Resumen día (numeración maya), snapshot estado, guarda en memoria | `day_started` (día+1) |
-
-**Total día:** 330 s = **5:30 min** (margen para iterar en ISS-52).
-
----
-
-## 2. Controles (Input Map — ISS-01)
+## 2. Controles
 
 | Acción | Teclas | Uso |
-|--------|--------|-----|
-| `move_up` | W / ↑ | Movimiento |
-| `move_down` | S / ↓ | Movimiento |
-| `move_left` | A / ← | Movimiento |
-| `move_right` | D / → | Movimiento |
-| `interact` | E | Sembrar, regar, cosechar, hablar, mercado, ofrenda |
-| `attack` | J / Clic izq | Lanza (melee) |
-| `cycle_tool` | Q | Cambiar herramienta/semilla/defensa seleccionada |
-| `pause` | Esc | Menú pausa |
+|---|---|---|
+| `move_up/down/left/right` | WASD / flechas | Moverse |
+| `interact` | E | Sembrar, regar, cosechar, alimentar, reparar, comerciar, ofrendar |
+| `attack` | J / clic izquierdo | Lanza (honda si es la herramienta activa) |
+| `cycle_tool` | Q | Cambiar herramienta, semilla o defensa |
+| `pause` | Esc | Pausa |
 
----
+## 3. Cultivos (maíz, frijol, calabaza)
 
-## 3. Cultivos (Milpa: maíz, frijol, calabaza)
+- 9 parcelas (`plots`). Sembrar: `interact` en parcela vacía con una semilla activa.
+- Regar con el cántaro (`water_jar`) gasta el `water_per_day` del cultivo del agua de `GameState`. El agua se rellena al máximo cada amanecer.
+- Al amanecer, cada parcela regada ese día avanza un día. Tras `wither_days` días seguidos sin agua, la planta se seca y la parcela queda vacía.
+- Los wáay pueden dañar cultivos; con vida 0, la parcela queda vacía.
 
-| Campo | Maíz | Frijol | Calabaza | Unidad | `.tres` destino |
-|-------|------|--------|----------|--------|-----------------|
-| `growth_days` | 3 | 2 | 4 | días | `crop_data.tres` (maize/beans/squash) |
-| `water_per_day` | 10 | 8 | 12 | unidades/parcela/día | `crop_data.tres` |
-| `yield_min` | 2 | 3 | 1 | unidades | `crop_data.tres` |
-| `yield_max` | 4 | 5 | 2 | unidades | `crop_data.tres` |
-| `cacao_value` | 5 | 4 | 6 | cacao/unidad | `item_data.tres` (maize_cob/bean_pod/squash) |
-| `seed_cost` | 3 | 2 | 4 | cacao | `item_data.tres` (seed_maize/seed_bean/seed_squash) |
-| `wither_days` | 2 | 2 | 3 | días sin agua | `crop_data.tres` |
+## 4. Pavos
 
-- 9+ parcelas (marcadores `plots` en `milpa.tscn`).
-- Siembra: `interact` en parcela vacía con semilla seleccionada.
-- Riego: `interact` en parcela con agua en inventario (`water_jar`).
-- Cosecha: `interact` en parcela lista → añade al inventario.
-
----
-
-## 4. Pavos (Animales)
-
-| Campo | Pavo ocelado | Pavo doméstico | Unidad | `.tres` destino |
-|-------|--------------|----------------|--------|-----------------|
-| `max_health` | 30 | 40 | HP | `animal_data.tres` (turkey_ocellated/turkey_domestic) |
-| `feed_cost` | 5 | 3 | cacao/día | `animal_data.tres` |
-| `produce_interval` | 2 | 1 | días | `animal_data.tres` |
-| `produce_item` | `feather_ocellated` | `feather_domestic` | — | `item_data.tres` |
-| `produce_value` | 8 | 3 | cacao/unidad | `item_data.tres` |
-| `needs_food` | true | true | bool | `animal_data.tres` |
-| `escape_chance` | 0.15 | 0.05 | 0–1 | `animal_data.tres` |
-
-- Corral: marcador `animal_pen` en `milpa.tscn`.
-- Alimentar: `interact` en corral con maíz en inventario.
-- Si `current_health` = 0 o escapan → `animal_died` / se pierden.
-
----
+- El corral empieza con 2 pavos (`turkey`, úulum). Cada día comen `feed_per_day` maíz (`interact` en el corral).
+- Un pavo alimentado da 1 `turkey_feather` cada `produce_interval` días. Si pasa `days_unfed_to_escape` días sin comer, escapa.
+- Los wáay atacan a los pavos; con vida 0 se emite `animal_died`.
+- Deseable: colmena de meliponas (`melipona_hive`, `needs_food = false`) que da `honey`.
 
 ## 5. Aluxes y ofrenda de saka'
 
-| Campo | Valor | Unidad | `.tres` destino |
-|-------|-------|--------|-----------------|
-| `altar_cooldown` | 2 | días | `level_data.tres` |
-| `saka_cost` | 15 | cacao | `item_data.tres` (saka_jar) |
-| `blessing_duration` | 1 | noche | `level_data.tres` |
-| `blessing_effect` | `creature_spawn_delay += 30%` | — | `level_data.tres` |
-| `blessing_effect` | `crop_wither_rate -= 50%` | — | `level_data.tres` |
+- Los aluxes son los guardianes de la milpa, no enemigos: no se les puede atacar.
+- Ofrenda: `interact` en el altar (`alux_altar`) con 1 `saka` antes de la noche. Bendición de esa noche: las criaturas aparecen más espaciadas (`blessing_spawn_mult`).
+- Sin ofrenda ese día, al amanecer un alux camina por la milpa, retrasa `mischief_growth_loss` día en `mischief_plots` parcelas al azar y desaparece (animación `vanish`).
 
-- Altar: marcador `alux_altar` en `milpa.tscn`.
-- Ofrenda: `interact` en altar con `saka_jar` en inventario → desbloquea bendición esa noche.
-- Si no se ofrenda: oleadas más agresivas (`wave_data.tres` `aggression_modifier = 1.3`).
+## 6. Criaturas y jefe
 
----
-
-## 6. Criaturas y Jefe
-
-### Base (`creature_data.tres` — campos compartidos)
-| Campo | Tipo | Unidad |
-|-------|------|--------|
-| `max_health` | int | HP |
-| `move_speed` | float | px/s |
-| `damage` | int | HP/golpe |
-| `attack_cooldown` | float | s |
-| `attack_range` | float | px |
-| `flies` | bool | — |
-| `xp_reward` | int | — |
-| `cacao_drop_min` | int | cacao |
-| `cacao_drop_max` | int | cacao |
-
-### Instancias (valores iniciales)
-
-| Criatura | max_health | move_speed | damage | attack_cd | range | flies | xp | cacao_drop | `.tres` |
-|----------|------------|------------|--------|-----------|-------|-------|-----|------------|---------|
-| **Wáay Pek'** (base) | 50 | 60 | 15 | 1.5 | 24 | false | 10 | 3–6 | `creatures/waay_pek.tres` |
-| **Wáay Kot** (vuela) | 35 | 90 | 10 | 1.0 | 32 | true | 15 | 5–10 | `creatures/waay_kot.tres` |
-| **Alux** (pequeño) | 25 | 50 | 8 | 2.0 | 16 | false | 8 | 2–4 | `creatures/alux.tres` |
-| **Jefe: Kisin** (noche 5) | 300 | 40 | 30 | 2.5 | 48 | false | 100 | 50–80 | `creatures/boss_kisin.tres` |
-
-- Spawns: marcadores `creature_spawns` (4+) en bordes de `milpa.tscn`.
-- Oleadas definidas en `wave_data.tres` (ver §10).
-- Kisin aparece solo noche 5 (condición en `level_data.tres` `boss_night = 5`).
-
----
+- Kisin, señor de Metnal, envía a los wáay cada noche. Atacan a Ya'ax, a los pavos, a los cultivos y a las albarradas que les cierran el paso.
+- Wáay Pek' (terrestre, MVP). Wáay Kot (vuela y salta albarradas, deseable; si se recorta, sus lugares en las oleadas pasan a Wáay Pek').
+- **Jefe:** Kisin aparece en la noche 5 con su oleada. Esa noche no tiene límite de tiempo: termina al derrotarlo.
+- Las criaturas aparecen en `creature_spawns` (4 o más) y sueltan cacao al morir.
 
 ## 7. Defensas
 
-| Defensa | blocks | radius | dps | cost_cacao | durability | `.tres` |
-|---------|--------|--------|-----|------------|------------|---------|
-| Albarrada | true | 0 | 0 | 20 | 200 | `defense_data.tres` (albarrada) |
-| Antorcha copal | false | 96 | 5 | 15 | 120 | `defense_data.tres` (copal_torch) |
-| Estatua balam | false | 120 | 12 (área) | 40 | 150 | `defense_data.tres` (balam_statue) |
-| Altar alux | false | 0 | 0 | 25 | ∞ | `defense_data.tres` (alux_altar) |
-| Tunk'ul (tambor) | false | 160 | 0 (ralentiza) | 30 | 100 | `defense_data.tres` (tunkul) |
-
-- Colocación: fase Tarde/Atardecer, `interact` en parcela libre con defensa seleccionada.
-- Reparación: `interact` en defensa dañada + `wood` en inventario (costo 50% original).
-- `blocks = true` → colisión física (capa `walls`). `dps > 0` → daño automático a criaturas en `radius`.
-
----
+- **Albarrada** (koot): cercas de piedra ya colocadas alrededor de la milpa y el corral. Bloquean el paso (capa `walls`). En la Mañana se reparan con `interact`, que cuesta cacao.
+- **Antorcha de copal:** se coloca en suelo libre en la Tarde o el Atardecer y quema a las criaturas en su radio.
+- **Estatua de báalam** (deseable): daño en área.
 
 ## 8. Economía y descuento por pago exacto
 
-| Ítem | Precio base (cacao) | Precio venta (cacao) | `.tres` |
-|------|---------------------|----------------------|---------|
-| `maize_cob` | 5 | 3 | `item_data.tres` |
-| `bean_pod` | 4 | 2 | `item_data.tres` |
-| `squash` | 6 | 4 | `item_data.tres` |
-| `feather_ocellated` | 8 | 5 | `item_data.tres` |
-| `feather_domestic` | 3 | 2 | `item_data.tres` |
-| `seed_maize` | 3 | — | `item_data.tres` |
-| `seed_bean` | 2 | — | `item_data.tres` |
-| `seed_squash` | 4 | — | `item_data.tres` |
-| `water_jar` | 10 | — | `item_data.tres` |
-| `saka_jar` | 15 | — | `item_data.tres` |
-| `wood` | 8 | 5 | `item_data.tres` |
-| `copal` | 12 | — | `item_data.tres` |
-| `obsidian` | 25 | 15 | `item_data.tres` |
+- Moneda: cacao. El mercado abre en la Tarde, en la casa (`house`). Se compran semillas, saka', copal y, como respaldo, cosechas y plumas; se venden cosechas, plumas y miel.
+- **Pago exacto:** la compra se cobra junta y el total se muestra en numeración maya. El jugador arma el pago con fichas de punto (1) y barra (5). Si la suma es igual al total, recibe de vuelta `floor(total × exact_payment_discount)` cacao, así que las compras menores de 10 cacao no tienen descuento. Si paga de más, recibe el cambio sin descuento; si paga de menos, no hay venta.
 
-**Descuento pago exacto:** si el jugador entrega la cantidad exacta de cacao sin requerir cambio → **10% descuento** en la compra (redondeo abajo).  
-Ejemplo: compra `water_jar` (10 cacao) entregando 10 → paga 9.
+## 9. Ofrenda del templo
 
-**Mercado:** accesible fase Tarde, marcador `house` en `milpa.tscn`. UI muestra precios, inventario, cacao actual.
+Se entrega en el templo del mapa regional durante la Tarde, en una o varias visitas. Los ítems entregados salen del inventario y el progreso se guarda en `GameState`. Debe estar completa al cerrar la Tarde del día 5.
 
----
+| Ítem | Cantidad |
+|---|---|
+| `maize` | 10 |
+| `beans` | 8 |
+| `squash` | 4 |
+| `turkey_feather` | 3 |
+| `copal` | 2 |
+| cacao | 30 |
 
-## 9. Ofrenda del templo (Victoria)
+Con el inventario inicial y las 9 parcelas (5 de maíz, 2 de frijol y 2 de calabaza), la ofrenda se completa incluso con el rendimiento mínimo.
 
-Requerida para acceder al ritual final (noche 5). Ítems y cantidades:
+## 10. Victoria y derrota
 
-| Ítem | Cantidad | Fuente |
-|------|----------|--------|
-| `maize_cob` | 20 | Cosecha maíz |
-| `bean_pod` | 15 | Cosecha frijol |
-| `squash` | 10 | Cosecha calabaza |
-| `feather_ocellated` | 5 | Pavos ocelados |
-| `copal` | 3 | Compra mercado / hallazgo |
-| `obsidian` | 1 | Compra mercado (caro) |
-| `cacao` | 50 | Acumulado trueque |
+**Victoria:** sobrevivir 5 noches con la ofrenda completa y derrotar a Kisin. Al amanecer empieza el ritual Ch'a' Cháak, un minijuego de ritmo con el tunk'ul. Con `pass_score` o más llega la lluvia y se pasa a la pantalla de fin. Si falla, el ritual se repite. Si el plan de recorte convierte el ritual en cinemática, se da por superado.
 
-- Progreso guardado en `GameState.offering_progress` (Dictionary `StringName → int`).
-- Entrega: `interact` en marcador `temple` (mapa regional, no en milpa) durante fase Tarde.
-- Al completar → desbloquea ritual Ch'a Cháak noche 5.
+**Derrota:**
 
----
+1. **Vida en 0 (supuesto 15):** la causa cualquier criatura en cualquier noche, incluido Kisin en la noche 5. Se emite `player_died` y `GameState.restore()` devuelve todo al snapshot del amanecer; se repite el día actual. No se guarda en disco.
+2. **Ofrenda incompleta:** Kisin aparece igual en la noche 5. Si al derrotarlo la ofrenda no está completa, no hay ritual: la pantalla de fin muestra el final "sin lluvia" y la partida se reinicia desde el día 1.
 
-## 10. Oleadas (waves)
+## 11. Efectos de sonido y música
 
-| Ola | Noche | Criaturas (tipo × cantidad) | Intervalo spawn | `.tres` |
-|-----|-------|----------------------------|-----------------|---------|
-| 1 | 1 | Wáay Pek' ×3 | 8 s | `waves/wave_01.tres` |
-| 2 | 2 | Wáay Pek' ×4, Alux ×2 | 7 s | `waves/wave_02.tres` |
-| 3 | 3 | Wáay Pek' ×3, Wáay Kot ×2, Alux ×3 | 6 s | `waves/wave_03.tres` |
-| 4 | 4 | Wáay Pek' ×5, Wáay Kot ×3, Alux ×4 | 5 s | `waves/wave_04.tres` |
-| 5 | 5 | Kisin ×1, Wáay Pek' ×4, Wáay Kot ×2, Alux ×3 | 4 s | `waves/wave_05.tres` |
+| ID | Evento | ID | Evento |
+|---|---|---|---|
+| `sfx_plant` | Sembrar | `sfx_trade` | Comprar o vender |
+| `sfx_water` | Regar | `sfx_exact_payment` | Pago exacto con descuento |
+| `sfx_harvest` | Cosechar | `sfx_offering_saka` | Ofrenda en el altar |
+| `sfx_crop_withered` | Un cultivo se seca o muere | `sfx_alux_mischief` | Travesura del alux al amanecer |
+| `sfx_feed` | Alimentar pavos | `sfx_temple_offering` | Entrega en el templo |
+| `sfx_turkey_escape` | Un pavo escapa | `sfx_wave_start` | Empieza la noche |
+| `sfx_repair` | Reparar albarrada | `sfx_kisin_appear` | Aparece Kisin |
+| `sfx_place_defense` | Colocar antorcha o estatua | `sfx_rhythm_hit` | Acierto en el tunk'ul |
+| `sfx_spear_swing` | Ataque con lanza | `sfx_rhythm_miss` | Fallo en el tunk'ul |
+| `sfx_sling_throw` | Disparo de honda (deseable) | `sfx_ui` | Cambiar herramienta o botón de menú |
+| `sfx_hit` | Un golpe impacta | `sfx_player_hurt` | Ya'ax recibe daño |
+| `sfx_creature_death` | Muere una criatura | `sfx_player_death` | Ya'ax muere |
+| `music_intro` | Cinemática inicial | `music_night` | Fase Noche (noches 1–4) |
+| `music_morning` | Fase Mañana | `music_kisin` | Noche 5 |
+| `music_afternoon` | Fase Tarde y mapas | `music_dawn` | Amanecer (resumen) |
+| `music_dusk` | Fase Atardecer | `music_ritual` | Ch'a' Cháak |
+| `music_end` | Pantalla de fin | | |
 
-Campos `wave_data.tres`:
-- `creatures: Array[Dictionary]` (clave: `creature_id`, `count`, `spawn_delay`)
-- `aggression_modifier: float` (1.0 base, 1.3 si no hay bendición alux)
-- `time_limit: int` (segundos; si expira → `wave_cleared` igual)
+Total: 24 efectos y 9 pistas.
 
----
+## 12. Tabla de valores
 
-## 11. Victoria y Derrota
+**Nivel** — `data/levels/level_01.tres` (`LevelData`)
 
-**Victoria (fin del prototipo nivel 1):**
-1. Sobrevivir 5 noches (día 5 completado).
-2. Ofrenda del templo completada (9. arriba).
-3. Ritual Ch'a Cháak completado (minijuego ritmo, ISS-33/ISS-43).
-4. Pantalla final con resumen y numeración maya.
+| Campo | Valor | Unidad |
+|---|---|---|
+| `morning_duration` / `afternoon_duration` / `dusk_duration` / `night_duration` / `dawn_duration` | 100 / 70 / 30 / 110 / 20 | s |
+| `days` / `boss_night` | 5 / 5 | día |
+| `max_water` | 100 | agua |
+| `starting_cacao` | 30 | cacao |
+| `starting_inventory` | `maize_seed` 5, `beans_seed` 2, `squash_seed` 2, `maize` 6 | unidades |
+| `starting_turkeys` | 2 | pavos |
+| `exact_payment_discount` | 0.10 | fracción |
+| `blessing_spawn_mult` | 1.3 | × intervalo |
+| `mischief_plots` / `mischief_growth_loss` | 2 / 1 | parcelas / día |
+| `offering_requirements` | §9 | unidades |
 
-**Derrota (supuesto 15):**
-- Vida de Ya'ax (`GameState.player_health`) llega a 0.
-- **Consecuencia:** Reinicio del **día actual** desde `GameState.snapshot()` guardado al amanecer (en memoria, sin disco).
-- Se pierden: progreso de cultivos del día, cacao gastado, defensas colocadas ese día.
-- Se conservan: inventario base, ofrenda templo, códice desbloqueado, día actual.
+**Cultivos** — `data/crops/{maize,beans,squash}.tres` (`CropData`)
 
----
+| id | `growth_days` (días) | `water_per_day` (agua) | `wither_days` (días) | `yield_min`–`yield_max` (unid.) | `max_health` (HP) |
+|---|---|---|---|---|---|
+| `maize` | 3 | 10 | 2 | 3–5 | 20 |
+| `beans` | 2 | 8 | 2 | 3–5 | 20 |
+| `squash` | 3 | 12 | 2 | 2–3 | 20 |
 
-## 12. Efectos de sonido (SFX) y pistas de música
+**Ítems** — `data/items/<id>.tres` (`ItemData`); "—" = no se comercia
 
-| ID | Evento disparador | Tipo | Notas |
-|----|-------------------|------|-------|
-| `sfx_plant` | Sembrar semilla | SFX | |
-| `sfx_water` | Regar parcela | SFX | |
-| `sfx_harvest` | Cosechar cultivo | SFX | |
-| `sfx_feed_turkey` | Alimentar pavo | SFX | |
-| `sfx_turkey_escape` | Pavo escapa | SFX | |
-| `sfx_build_defense` | Colocar defensa | SFX | |
-| `sfx_repair` | Reparar defensa | SFX | |
-| `sfx_spear_swing` | Ataque lanza | SFX | |
-| `sfx_spear_hit` | Lanza impacta | SFX | |
-| `sfx_sling_throw` | Honda (deseable) | SFX | |
-| `sfx_sling_hit` | Piedra impacta | SFX | |
-| `sfx_creature_hit` | Criatura recibe daño | SFX | |
-| `sfx_creature_death` | Criatura muere | SFX | |
-| `sfx_player_hit` | Ya'ax recibe daño | SFX | |
-| `sfx_player_death` | Ya'ax muere (derrota) | SFX | |
-| `sfx_market_buy` | Compra en mercado | SFX | |
-| `sfx_market_sell` | Venta en mercado | SFX | |
-| `sfx_offering` | Entregar ofrenda saka'/templo | SFX | |
-| `sfx_blessing` | Bendición alux activada | SFX | |
-| `sfx_wave_start` | Inicio oleada noche | SFX | |
-| `sfx_wave_clear` | Oleada completada | SFX | |
-| `sfx_day_summary` | Pantalla amanecer | SFX | |
-| `sfx_rhythm_hit` | Acierto Ch'a Cháak | SFX | |
-| `sfx_rhythm_miss` | Fallo Ch'a Cháak | SFX | |
-| `music_morning` | Fase Mañana | Música | Loop, ambiente milpa |
-| `music_afternoon` | Fase Tarde | Música | Loop, mercado |
-| `music_dusk` | Fase Atardecer | Música | Tensión creciente |
-| `music_night` | Fase Noche | Música | Loop, combate |
-| `music_dawn` | Amanecer | Música | Corta, resolución |
-| `music_boss` | Noche 5 (Kisin) | Música | Intensa, única |
-| `music_ritual` | Ch'a Cháak | Música | Ritmo, interactiva |
-| `music_intro` | Cinemática inicial | Música | |
-| `music_outro` | Pantalla final | Música | |
+| id | `buy_price` (cacao) | `sell_price` (cacao) |
+|---|---|---|
+| `maize` / `beans` / `squash` | 5 / 4 / 6 | 3 / 2 / 4 |
+| `maize_seed` / `beans_seed` / `squash_seed` | 3 / 2 / 3 | — |
+| `saka` / `copal` | 8 / 6 | — |
+| `turkey_feather` | 8 | 5 |
+| `honey` (deseable) | — | 6 |
 
-Total: **25 SFX + 10 pistas musicales**.
+**Animales** — `data/animals/<id>.tres` (`AnimalData`)
 
----
+| id | `max_health` (HP) | `needs_food` | `feed_per_day` (maíz) | `produce_item` | `produce_interval` (días) | `days_unfed_to_escape` (días) |
+|---|---|---|---|---|---|---|
+| `turkey` | 30 | true | 1 | `turkey_feather` | 2 | 2 |
+| `melipona_hive` (deseable) | 20 | false | 0 | `honey` | 2 | — |
 
-## 13. Tabla maestra de valores para `.tres`
+**Criaturas** — `data/creatures/<id>.tres` (`CreatureData`)
 
-| Sistema | Campo | Valor inicial | Unidad | Archivo `.tres` |
-|---------|-------|---------------|--------|-----------------|
-| **Ciclo** | `morning_duration` | 100 | s | `level_data.tres` |
-| | `afternoon_duration` | 70 | s | `level_data.tres` |
-| | `dusk_duration` | 30 | s | `level_data.tres` |
-| | `night_duration` | 110 | s | `level_data.tres` |
-| | `dawn_duration` | 20 | s | `level_data.tres` |
-| | `boss_night` | 5 | día | `level_data.tres` |
-| **Agua** | `max_water` | 100 | unidades | `game_state` (runtime) |
-| | `water_jar_capacity` | 30 | usos | `item_data.tres` (water_jar) |
-| **Cultivos** | Ver §3 tabla completa | — | — | `crop_data.tres` ×3 |
-| **Pavos** | Ver §4 tabla completa | — | — | `animal_data.tres` ×2 |
-| **Aluxes** | Ver §5 tabla completa | — | — | `level_data.tres` / `item_data.tres` |
-| **Criaturas** | Ver §6 tabla completa | — | — | `creature_data.tres` ×4 |
-| **Defensas** | Ver §7 tabla completa | — | — | `defense_data.tres` ×5 |
-| **Economía** | Ver §8 tabla completa | — | — | `item_data.tres` ×13 |
-| | `exact_payment_discount` | 0.10 | 0–1 | `level_data.tres` |
-| **Ofrenda** | Ver §9 tabla completa | — | — | `level_data.tres` (offering_requirements) |
-| **Oleadas** | Ver §10 tabla completa | — | — | `wave_data.tres` ×5 |
-| **Jugador** | `max_health` | 100 | HP | `creature_data.tres` (player) |
-| | `move_speed` | 80 | px/s | `creature_data.tres` (player) |
-| | `spear_damage` | 25 | HP | `weapon_data.tres` (spear) |
-| | `spear_range` | 32 | px | `weapon_data.tres` (spear) |
-| | `spear_cooldown` | 0.6 | s | `weapon_data.tres` (spear) |
-| | `invuln_time` | 0.5 | s | `hurtbox_component` (runtime) |
-| **Ritual** | `rhythm_chart_difficulty` | 1.0 | 0–1 | `rhythm_chart_data.tres` |
-| | `ritual_min_score` | 0.7 | 0–1 | `rhythm_chart_data.tres` |
+| id | `max_health` (HP) | `move_speed` (px/s) | `damage` (HP) | `attack_cooldown` (s) | `attack_range` (px) | `flies` | `cacao_drop_min`–`max` (cacao) |
+|---|---|---|---|---|---|---|---|
+| `waay_pek` | 50 | 60 | 10 | 1.5 | 24 | false | 3–6 |
+| `waay_kot` (deseable) | 35 | 90 | 8 | 1.0 | 32 | true | 5–8 |
+| `kisin` | 400 | 40 | 25 | 2.5 | 48 | false | 0 |
 
----
+**Defensas** — `data/defenses/<id>.tres` (`DefenseData`)
 
-## 14. Convenciones de nombres (para P2/P3/P4)
+| id | `blocks` | `max_health` (HP) | `radius` (px) | `damage_per_second` (HP/s) | `cost` (cacao) | `repair_amount` (HP) | `repair_cost` (cacao) |
+|---|---|---|---|---|---|---|---|
+| `albarrada` | true | 150 | 0 | 0 | 0 (ya colocada) | 50 | 2 |
+| `copal_torch` | false | 60 | 64 | 5 | 12 | — | — |
+| `balam_statue` (deseable) | false | 150 | 96 | 10 | 18 | — | — |
 
-- Archivos/clases/variables/señales: **inglés** (`crop_data.gd`, `max_health`, `phase_changed`).
-- Textos visibles (UI, diálogos, códice): **español + maya yucateco**.
-- Rutas `data/`: `snake_case` singular (`crops/maize.tres`, `creatures/waay_pek.tres`).
-- IDs de recursos: `StringName` (`"maize_cob"`, `"waay_pek"`).
-- Prohibidos en código y textos: *nahual, Xibalbá, tres hermanas, gallina, cerdo, vaca, chivo, caballo, caña de azúcar, cítricos, plátano*.
+**Oleadas** — `data/waves/wave_0N.tres` (`WaveData`)
 
----
+| Noche | `creatures` (id × cantidad) | `spawn_interval` (s) |
+|---|---|---|
+| 1 | `waay_pek` ×3 | 8 |
+| 2 | `waay_pek` ×5 | 7 |
+| 3 | `waay_pek` ×4, `waay_kot` ×2 | 6 |
+| 4 | `waay_pek` ×6, `waay_kot` ×2 | 5 |
+| 5 | `kisin` ×1, `waay_pek` ×4 | 6 |
 
-## 15. Referencias culturales (mínimas para nivel 1)
+**Ritual** — `data/levels/cha_chaak_chart.tres` (`RhythmChartData`): `bpm` 90 pulsos/min, `length` 45 s, `hit_window` 0.15 s, `pass_score` 0.7 (fracción).
 
-| Término | Uso en juego | Fuente |
-|---------|--------------|--------|
-| Ya'ax | Protagonista | Glosario ISS-03 |
-| Kisin | Jefe final (noche 5) | Glosario ISS-03 |
-| Wáay Pek' / Wáay Kot | Criaturas nocturnas | Glosario ISS-03 |
-| Chaac / Ch'a Cháak | Lluvia / ritual ritmo | Glosario ISS-03 |
-| Saka' | Bebida ceremonial (maíz) | Glosario ISS-03 |
-| Alux | Espíritus protectores | Glosario ISS-03 |
-| Balam | Jaguar / estatua defensa | Glosario ISS-03 |
-| Tunk'ul | Tambor ceremonial | Glosario ISS-03 |
-| Dzibilchaltún / Uxmal / Chichén Itzá / Ek' Balam | Ciudades (mapa regional) | Glosario ISS-03 |
+**Ya'ax y armas** — no tienen clase de datos en ISS-05; son `@export` de sus escenas:
 
-> **Nota:** Glosario completo (30+ términos) en `docs/culture/glosario.md` (ISS-03). Revisión con hablante nativo programada D6.
-
----
-
-*Fin del GDD v0.1 — Valores sujetos a balance en ISS-52.*
+| Destino | Campo | Valor | Unidad |
+|---|---|---|---|
+| `src/player/player.tscn` | `max_health` / `move_speed` / `invulnerability_time` | 100 / 80 / 0.5 | HP / px/s / s |
+| `src/combat/weapons/spear.tscn` | `damage` / `range` / `cooldown` | 25 / 24 / 0.6 | HP / px / s |
+| `src/combat/weapons/sling.tscn` (deseable) | `damage` / `range` / `cooldown` | 15 / 160 / 1.2 | HP / px / s |
