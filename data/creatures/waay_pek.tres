@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://src/creatures/base/creature_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"waay_pek"
+max_health = 50
+move_speed = 60.0
+damage = 10
+attack_cooldown = 1.5
+attack_range = 24.0
+flies = false
+cacao_drop_min = 3
+cacao_drop_max = 6
