@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RhythmChartData" format=3]
+
+[ext_resource type="Script" path="res://src/minigames/cha_chaak/rhythm_chart_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+bpm = 90.0
+length = 45.0
+hit_window = 0.15
+pass_score = 0.7
