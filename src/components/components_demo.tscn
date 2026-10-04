@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://dp2avdv132xmy"]
+
+[ext_resource type="Script" uid="uid://lw8fougist7f" path="res://src/components/components_demo.gd" id="1_demo"]
+[ext_resource type="Script" uid="uid://dvuyyowljasm4" path="res://src/components/health_component.gd" id="2_health"]
+[ext_resource type="Script" uid="uid://txdlph1t1bm1" path="res://src/components/hurtbox_component.gd" id="3_hurtbox"]
+[ext_resource type="Script" uid="uid://dklm4i53kfetv" path="res://src/components/hitbox_component.gd" id="4_hitbox"]
+[ext_resource type="Script" uid="uid://baem55frkditg" path="res://src/components/interactable_component.gd" id="5_interactable"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dummy"]
+radius = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hazard"]
+size = Vector2(160, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_actor"]
+size = Vector2(12, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lever"]
+radius = 24.0
+
+[node name="ComponentsDemo" type="Node2D" unique_id=1999201239]
+script = ExtResource("1_demo")
+
+[node name="Dummy" type="Node2D" parent="." unique_id=1785013525]
+position = Vector2(120, 90)
+
+[node name="HealthComponent" type="Node" parent="Dummy" unique_id=1974513879]
+script = ExtResource("2_health")
+
+[node name="HurtboxComponent" type="Area2D" parent="Dummy" unique_id=17795861 node_paths=PackedStringArray("health_component")]
+script = ExtResource("3_hurtbox")
+health_component = NodePath("../HealthComponent")
+team = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dummy/HurtboxComponent" unique_id=2106824273]
+shape = SubResource("CircleShape2D_dummy")
+
+[node name="FriendlyDummy" type="Node2D" parent="." unique_id=1047630143]
+position = Vector2(200, 90)
+
+[node name="HealthComponent" type="Node" parent="FriendlyDummy" unique_id=1041615375]
+script = ExtResource("2_health")
+
+[node name="HurtboxComponent" type="Area2D" parent="FriendlyDummy" unique_id=2034235139 node_paths=PackedStringArray("health_component")]
+script = ExtResource("3_hurtbox")
+health_component = NodePath("../HealthComponent")
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FriendlyDummy/HurtboxComponent" unique_id=719338463]
+shape = SubResource("CircleShape2D_dummy")
+
+[node name="Hazard" type="Area2D" parent="." unique_id=1235679848]
+position = Vector2(160, 90)
+script = ExtResource("4_hitbox")
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=954471262]
+shape = SubResource("RectangleShape2D_hazard")
+
+[node name="Actor" type="CharacterBody2D" parent="." unique_id=2055344816]
+position = Vector2(160, 200)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actor" unique_id=1860730438]
+shape = SubResource("RectangleShape2D_actor")
+
+[node name="Lever" type="Node2D" parent="." unique_id=962908547]
+position = Vector2(360, 200)
+
+[node name="InteractableComponent" type="Area2D" parent="Lever" unique_id=1925700791]
+script = ExtResource("5_interactable")
+prompt_text = "Probar interacción"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/InteractableComponent" unique_id=1532168505]
+shape = SubResource("CircleShape2D_lever")
