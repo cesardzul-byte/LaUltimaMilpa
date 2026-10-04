@@ -36,10 +36,10 @@ Consonantes del alfabeto: `' b ch ch' j k k' l m n p p' s t t' ts ts' w x y`. Vo
 | Término | Pronunciación aprox. | Significado | Uso en el juego | Fuente | Estado |
 |---|---|---|---|---|---|
 | Ya'ax | ya-'ash | Verde, azul; también «primero». | Nombre del protagonista. | `CORDEMEX`, `BRICKER1998` | pendiente |
-| Kisin | ki-sín | Ser del inframundo ligado a la muerte y los temblores; en el habla actual, «demonio». | Señor de Metnal, que envía a los wáay; jefe de la noche 5. | `CORDEMEX`, `THOMPSON1970` | pendiente |
+| Kisin | ki-sín | Ser del inframundo ligado a la muerte y los temblores; en el habla actual, «demonio». | Señor de Metnal, que envía a los wáay. Se nombra en la intro y en los textos; no aparece en pantalla. | `CORDEMEX`, `THOMPSON1970` | pendiente |
 | Metnal | met-nál | Inframundo de los mayas yucatecos (Landa lo escribe *Mitnal*). | Lugar de donde salen las criaturas de la noche. | `LANDA`, `CORDEMEX` | pendiente |
 | wáay | wáai | Persona que por hechicería toma forma de animal; espíritu compañero. | Nombre genérico de las criaturas nocturnas. | `CORDEMEX`, `BRICKER1998`, `HOUSTON1989`, `REDFIELD1934` | pendiente |
-| Wáay Pek' | wáai pek' | Wáay con forma de perro (*pek'*: perro). | Criatura terrestre de la noche (`waay_pek`). | `CORDEMEX`, `REDFIELD1934` | pendiente |
+| Wáay Pek' | wáai pek' | Wáay con forma de perro (*pek'*: perro). | Criatura terrestre de la noche (`waay_pek`). Su versión escalada, el Gran Wáay Pek' (`gran_waay_pek`), es el jefe de la noche 5. | `CORDEMEX`, `REDFIELD1934` | pendiente |
 | Wáay Kot | wáai kot | Wáay con forma de águila (*kot*: águila). | Criatura voladora, deseable (`waay_kot`). | `CORDEMEX`, `BRICKER1998` | pendiente |
 | alux (pl. aluxo'ob) | a-lúsh | Ser pequeño que cuida la milpa y el monte; se le deja ofrenda. | Guardianes de la milpa; reciben la ofrenda de saka' (`alux`, `alux_altar`). | `CORDEMEX`, `REDFIELD1934` | pendiente |
 | Cháak | cháak | Dios de la lluvia; también «lluvia». Grafía antigua: *Chaac*. | Deidad a la que se pide lluvia en el ritual. | `LANDA`, `CORDEMEX`, `BRICKER1998` | pendiente |
@@ -56,7 +56,7 @@ Consonantes del alfabeto: `' b ch ch' j k k' l m n p p' s t t' ts ts' w x y`. Vo
 | k'úum | k'úum | Calabaza. | Cultivo. | `CORDEMEX`, `BRICKER1998`, `TERAN1994` | pendiente |
 | saka' | sa-ka' | Bebida de maíz molido, de uso ceremonial (variante regional: *sakab*). | Ofrenda a los aluxes. | `CORDEMEX`, `BRICKER1998`, `REDFIELD1934` | pendiente |
 | pom | pom | Copal: resina aromática que se quema en ceremonias. | Antorchas de copal (`copal_torch`). | `CORDEMEX`, `LANDA`, `BASTARRACHEA1992` | pendiente |
-| kakaw | ka-káu | Cacao. | Moneda del mercado. | `CORDEMEX`, `LANDA` | pendiente |
+| kakaw | ka-káu | Cacao. | Moneda del mercado de la plaza (mapa regional). | `CORDEMEX`, `LANDA` | pendiente |
 | koot | koot | Albarrada: cerca de piedra apilada sin mezcla. | Cerca reparable de la milpa y el corral (`albarrada`). | `CORDEMEX`, `TERAN1994` | pendiente |
 | tunk'ul | tun-k'ul | Tambor de tronco hueco. | Instrumento del ritual (`tunkul`). | `CORDEMEX`, `LANDA` | pendiente |
 
