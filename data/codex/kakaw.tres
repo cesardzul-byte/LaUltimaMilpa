@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"kakaw"
+term = "kakaw"
+pronunciation = "ka-káu"
+meaning = "Cacao (Theobroma cacao), grano sagrado y moneda de cambio en Mesoamérica prehispánica. Landa registra que con 10 granos se compraba un conejo, con 100 una manta de algodón. En el kool no crece (clima seco), pero llega por trueque desde el sur. El jugador gana cacao vendiendo cosechas en el mercado regional y lo gasta en semillas, herramientas y defensas. No existía moneda acuñada; el kakaw era valor universal."
+in_game_use = "Moneda del mercado regional; se gana vendiendo cosechas y se gasta en semillas, albarradas y torretas."
+sources = PackedStringArray("CORDEMEX", "LANDA")

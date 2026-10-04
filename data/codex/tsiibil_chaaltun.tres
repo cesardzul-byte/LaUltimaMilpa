@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"tsiibil_chaaltun"
+term = "Ts'íibil Cháaltun / Xlakaj"
+pronunciation = "ts'íi-bil cháal-tun / shla-káj"
+meaning = "Ts'íibil Cháaltun ('donde hay escritura en piedras planas'), nombre maya de Dzibilchaltún (nombre oficial INAH). Fue ciudad importante desde el Preclásico tardío (500 a.C.) hasta la Conquista; destaca el Templo de las Siete Muñecas, alineado al equinoccio. Xlakaj (nombre oficial: Xlacah, 'pueblo viejo' según INAH) es el cenote principal, fuente de agua dulce y ofrendas ceremoniales; en su fondo hallaron cerámica, jade y huesos. El nivel 1 transcurre en sus alrededores."
+in_game_use = "Sitio del nivel 1; el cenote Xlakaj es fuente de agua y punto de interés en el mapa regional."
+sources = PackedStringArray("ANDREWS1980", "INAH", "CORDEMEX")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"cha_chaak"
+term = "Cháak / Ch'a' Cháak"
+pronunciation = "cháak / ch'a' cháak"
+meaning = "Cháak es el dios de la lluvia y el rayo; también significa 'lluvia'. Landa registra sus cuatro aspectos según los rumbos: Cháak Xib Chaak (oriente, rojo), Cháak Sak Chaak (norte, blanco), Cháak Ek Chaak (poniente, negro), Cháak Kan Chaak (sur, amarillo). El Ch'a' Cháak ('traer la lluvia') es la ceremonia campesina donde los hmeen (sacerdotes) y la comunidad baten tambores (tunk'ul), queman pom y ofrecen saka' para que los cuatro Cháako'ob envíen agua al kool."
+in_game_use = "Ritual final del nivel 1 (minijuego de ritmo); completarlo invoca lluvia que riega todo el kool."
+sources = PackedStringArray("LANDA", "CORDEMEX", "BRICKER1998", "REDFIELD1934", "TERAN1994")

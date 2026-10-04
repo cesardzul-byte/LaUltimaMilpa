@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"ixiim"
+term = "ixi'im"
+pronunciation = "i-shi-'im"
+meaning = "Granos de maíz, base de la alimentación y la cosmogonía maya; el Popol Vuh narra que los humanos fueron formados de masa de maíz. En el kool, el ixi'im crece entrelazado con bu'ul (frijol) y k'úum (calabaza): el frijol fija nitrógeno y la calabaza cubre el suelo reteniendo humedad. La primera cosecha se ofrenda a los aluxes y a Cháak antes de consumir."
+in_game_use = "Cultivo principal del kool; su cosecha alimenta al jugador y genera cacao en el mercado regional."
+sources = PackedStringArray("CORDEMEX", "BRICKER1998", "TERAN1994")

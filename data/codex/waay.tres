@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"waay"
+term = "wáay"
+pronunciation = "wáai"
+meaning = "Persona que por hechicería o nacimiento toma forma animal (pek', kot, báalam) para actuar de noche; también el espíritu compañero que cada persona tiene desde el nacimiento. El concepto es netamente maya (glifo way en epigrafía clásica), no préstamo nahua. Los wáayo'ob salen de Metnal por orden de Kisin para dañar la milpa; el jugador debe defenderla hasta el amanecer."
+in_game_use = "Nombre genérico de las criaturas nocturnas (Wáay Pek', Wáay Kot) que atacan el kool cada noche."
+sources = PackedStringArray("CORDEMEX", "BRICKER1998", "HOUSTON1989", "REDFIELD1934")
