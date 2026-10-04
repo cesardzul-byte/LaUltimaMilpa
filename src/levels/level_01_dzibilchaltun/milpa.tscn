@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://7uyqve240thq"]
 
 [ext_resource type="TileSet" path="res://src/levels/level_01_dzibilchaltun/milpa_tileset.tres" id="1_mwpak"]
+[ext_resource type="PackedScene" path="res://src/player/player.tscn" id="2_player"]
 
 [node name="Milpa" type="Node2D" unique_id=1303351114]
 y_sort_enabled = true
@@ -73,8 +74,10 @@ position = Vector2(88, 296)
 [node name="AluxAltar" type="Marker2D" parent="Markers" unique_id=1842107807 groups=["alux_altar"]]
 position = Vector2(200, 168)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1819171116]
+[node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(152, 296)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1819171116]
 limit_left = 0
 limit_top = 0
 limit_right = 640
