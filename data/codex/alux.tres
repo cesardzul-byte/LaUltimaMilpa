@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"alux"
+term = "alux (pl. aluxo'ob)"
+pronunciation = "a-lúsh"
+meaning = "Ser pequeño que cuida la milpa y el monte; se le deja ofrenda."
+in_game_use = "Guardianes de la milpa; reciben la ofrenda de saka'."
+sources = PackedStringArray("CORDEMEX", "REDFIELD1934")

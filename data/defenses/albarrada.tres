@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DefenseData" format=3]
+
+[ext_resource type="Script" path="res://src/milpa/defenses/defense_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"albarrada"
+blocks = true
+max_health = 150
+radius = 0.0
+damage_per_second = 0.0
+cost = 0
+repair_amount = 50
+repair_cost = 2
