@@ -7,6 +7,6 @@ script = ExtResource("1")
 id = &"cha_chaak"
 term = "Ch'a' Cháak"
 pronunciation = "ch'a' cháak"
-meaning = "Ceremonia campesina de petición de lluvia ('traer la lluvia'). Se invoca a los cuatro Cháak, señores de la lluvia en cada rumbo: oriente (lak'in, rojo), norte (xaman, blanco), poniente (chik'in, negro) y sur (nojol, amarillo). Los h-men (sacerdotes) y la comunidad baten el tunk'ul, queman pom y ofrecen saka' para que envíen agua al kool. Landa registra los nombres coloniales: Chac Xib Chac, Sac Xib Chac, Ek Xib Chac y Kan Xib Chac."
+meaning = "Ceremonia campesina de petición de lluvia («traer la lluvia»). Se hace cuando la sequía amenaza la milpa, y en ella participan todos los hombres del pueblo. Se invoca a los cuatro Cháak, señores de la lluvia, uno en cada rumbo del cielo: oriente (lak'in, rojo), norte (xaman, blanco), poniente (chik'in, negro) y sur (nojol, amarillo), colores que ya registra Landa. Un especialista ritual la dirige: se ofrece saka', se quema pom y cuatro niños atados al altar croan como ranas para llamar la lluvia al kool."
 in_game_use = "Ritual final del nivel 1 (minijuego de ritmo); completarlo muestra la llegada de la lluvia y lleva a la pantalla de fin."
 sources = PackedStringArray("LANDA", "CORDEMEX", "BRICKER1998", "REDFIELD1934", "TERAN1994")
