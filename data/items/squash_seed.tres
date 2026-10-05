@@ -1,11 +1,10 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" path="res://src/economy/item_data.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/ui/icons/maize.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/squash_seed.png" id="2"]
 
 [resource]
 script = ExtResource("1")
-id = &"maize"
+id = &"squash_seed"
 icon = ExtResource("2")
-buy_price = 5
-sell_price = 3
+buy_price = 3
