@@ -1,14 +1,10 @@
-﻿[gd_resource type="Resource" script_class="DefenseData" format=3]
+[gd_resource type="Resource" script_class="DefenseData" format=3]
 
 [ext_resource type="Script" path="res://src/milpa/defenses/defense_data.gd" id="1"]
 
 [resource]
 script = ExtResource("1")
 id = &"copal_torch"
-blocks = false
-max_health = 60
 radius = 64.0
 damage_per_second = 5.0
 cost = 12
-repair_amount = 0
-repair_cost = 0

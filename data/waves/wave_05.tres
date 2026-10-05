@@ -1,4 +1,4 @@
-﻿[gd_resource type="Resource" script_class="WaveData" format=3]
+[gd_resource type="Resource" script_class="WaveData" format=3]
 
 [ext_resource type="Script" path="res://src/waves/wave_data.gd" id="1"]
 

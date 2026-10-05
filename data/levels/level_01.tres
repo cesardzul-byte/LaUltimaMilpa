@@ -1,4 +1,4 @@
-﻿[gd_resource type="Resource" script_class="LevelData" format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3]
 
 [ext_resource type="Script" path="res://src/levels/level_data.gd" id="1"]
 [ext_resource type="Resource" path="res://data/waves/wave_01.tres" id="2"]
@@ -11,32 +11,18 @@
 [resource]
 script = ExtResource("1")
 id = &"level_01"
-morning_duration = 100.0
-afternoon_duration = 70.0
-dusk_duration = 30.0
-night_duration = 110.0
-dawn_duration = 20.0
-days = 5
-boss_night = 5
 waves = Array[ExtResource("7")]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
-max_water = 100
-starting_cacao = 30
 starting_inventory = Dictionary[StringName, int]({
-&"maize_seed": 5,
 &"beans_seed": 2,
-&"squash_seed": 2,
-&"maize": 6
+&"maize": 6,
+&"maize_seed": 5,
+&"squash_seed": 2
 })
-starting_turkeys = 2
-exact_payment_discount = 0.1
-blessing_spawn_mult = 1.3
-mischief_plots = 2
-mischief_growth_loss = 1
 offering_requirements = Dictionary[StringName, int]({
-&"maize": 10,
 &"beans": 8,
-&"squash": 4,
-&"turkey_feather": 3,
+&"cacao": 30,
 &"copal": 2,
-&"cacao": 30
+&"maize": 10,
+&"squash": 4,
+&"turkey_feather": 3
 })
