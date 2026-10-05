@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1")
 id = &"maya_numerals"
-term = "Numerales mayas (mix ba'al – bolonlajun)"
+term = "mix ba'al"
 pronunciation = "mish ba-'al, jun, ka-'a, óosh, kan, jo-'o, wak, wuk, wa-shak, bo-lon, la-jun, bu-luk, laj-ka-'a, óosh-la-jun, kan-la-jun, jo-'o-la-jun, wak-la-jun, wuk-la-jun, wa-shak-la-jun, bo-lon-la-jun"
-meaning = "Sistema vigesimal (base 20) con tres signos: concha (0, mix ba'al), punto (1) y barra (5). Del 1 al 19 se combinan puntos y barras; al contar objetos se agrega el clasificador -p'éel (ej. jump'éel = una cosa). Los numerales aparecen en estelas, códices y en la cuenta del tiempo ritual. En el juego, el resumen del amanecer muestra el día en numerales mayas."
+meaning = "Sistema vigesimal (base 20) con tres signos: concha (0, mix ba'al), punto (1) y barra (5). Del 1 al 19 se combinan puntos y barras; al contar objetos se agrega el clasificador -p'éel (ej. jump'éel = una cosa). Los numerales aparecen en estelas, códices y en la cuenta del tiempo ritual; Landa describe su uso calendárico y la notación de cabezas para periodos mayores."
 in_game_use = "Resumen del amanecer (día 1–5) y códice; se dibujan con concha, punto y barra."
-sources = PackedStringArray("BASTARRACHEA1992", "BRICKER1998", "CORDEMEX")
+sources = PackedStringArray("BASTARRACHEA1992", "BRICKER1998", "CORDEMEX", "LANDA")

@@ -35,4 +35,4 @@ Bibliografía del glosario (`docs/culture/glosario.md`). Cada término del glosa
 | Clave | Referencia | Se usa para |
 |---|---|---|
 | `ANDREWS1980` | Andrews IV, E. Wyllys y E. Wyllys Andrews V. 1980. *Excavations at Dzibilchaltun, Yucatan, Mexico*. New Orleans: Middle American Research Institute, Tulane University (Publication 48). | Dzibilchaltún y el cenote Xlacah. |
-| `INAH` | Instituto Nacional de Antropología e Historia (INAH). Fichas de las zonas arqueológicas de Dzibilchaltún, Uxmal, Chichén Itzá y Ek' Balam, Red de Zonas Arqueológicas, <https://www.inah.gob.mx>. Consultado: _____ (anotar fecha al revisar). | Nombre oficial de cada zona y significado que da el INAH. |
+| `INAH` | Instituto Nacional de Antropología e Historia (INAH). Fichas de las zonas arqueológicas de Dzibilchaltún, Uxmal, Chichén Itzá y Ek' Balam, Red de Zonas Arqueológicas, <https://www.inah.gob.mx>. Consultado: 2026-10-04. | Nombre oficial de cada zona y significado que da el INAH. |
