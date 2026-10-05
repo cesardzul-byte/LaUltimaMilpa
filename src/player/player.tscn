@@ -69,6 +69,18 @@ region = Rect2(32, 72, 16, 24)
 atlas = ExtResource("2_yaax")
 region = Rect2(48, 72, 16, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_use_tool_0"]
+atlas = ExtResource("2_yaax")
+region = Rect2(0, 120, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_use_tool_1"]
+atlas = ExtResource("2_yaax")
+region = Rect2(16, 120, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_use_tool_2"]
+atlas = ExtResource("2_yaax")
+region = Rect2(32, 120, 16, 24)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hurt_0"]
 atlas = ExtResource("2_yaax")
 region = Rect2(0, 144, 16, 24)
@@ -165,6 +177,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_use_tool_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_use_tool_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_use_tool_2")
+}],
+"loop": false,
+"name": &"use_tool",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hurt_0")
 }, {
 "duration": 1.0,
@@ -223,3 +249,27 @@ team = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractionSensor" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionSensor"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_feet")
+
+[node name="InteractionPrompt" type="Label" parent="."]
+visible = false
+z_index = 1
+offset_left = -48.0
+offset_top = -38.0
+offset_right = 48.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+vertical_alignment = 2

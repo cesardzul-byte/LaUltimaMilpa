@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dng4pxxnai4tc" path="res://src/player/player_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://src/player/player.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://baem55frkditg" path="res://src/components/interactable_component.gd" id="3_interactable"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_test"]
+radius = 24.0
+
+[node name="PlayerTest" type="Node2D"]
+script = ExtResource("1_test")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(200, 150)
+
+[node name="TestInteractable" type="Node2D" parent="."]
+position = Vector2(260, 150)
+
+[node name="InteractableComponent" type="Area2D" parent="TestInteractable"]
+script = ExtResource("3_interactable")
+prompt_text = "Probar herramienta"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestInteractable/InteractableComponent"]
+shape = SubResource("CircleShape2D_test")
