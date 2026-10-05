@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"ixiim"
+term = "ixi'im"
+pronunciation = "i-shi-'im"
+meaning = "Granos de maíz, base de la alimentación maya yucateca; molido y disuelto en agua da el saka' que se ofrece a los dioses. En el kool, el ixi'im crece entrelazado con bu'ul (frijol) y k'úum (calabaza) en un policultivo milenario: el frijol fija nitrógeno y la calabaza cubre el suelo reteniendo humedad. En Chan Kom, las primeras mazorcas de una milpa nueva se ofrecen a los dioses que la cuidan antes de comerlas, según la tradición agrícola de la península."
+in_game_use = "Cultivo principal del kool; alimenta a los pavos, se entrega en la ofrenda del templo y se vende por cacao en el mercado de la plaza."
+sources = PackedStringArray("CORDEMEX", "BRICKER1998", "TERAN1994", "REDFIELD1934")

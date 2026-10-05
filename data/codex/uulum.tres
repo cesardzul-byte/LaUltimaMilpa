@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"uulum"
+term = "úulum"
+pronunciation = "úu-lum"
+meaning = "Pavo doméstico (Meleagris gallopavo), ave nativa que se cría en casa. Landa cuenta que las mujeres criaban aves de la tierra para comer y que en algunas ceremonias se ofrecían cabezas de pavo con pan y bebidas de maíz. En Chan Kom, el pavo es indispensable como ofrenda sagrada y comida de fiesta. El kuuts (Meleagris ocellata) es otra especie, el pavo ocelado o de monte: Landa recoge un nombre maya de Yucatán que traduce «tierra de pavos y venados», y ese pavo es el kuuts."
+in_game_use = "Pavos del corral; si se alimentan con maíz dan plumas de pavo, que se venden o se entregan en la ofrenda del templo. De noche, los wáay los atacan."
+sources = PackedStringArray("CORDEMEX", "BRICKER1998", "LANDA", "REDFIELD1934")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"kool"
+term = "kool"
+pronunciation = "kool"
+meaning = "Terreno desmontado y quemado donde se siembra maíz, frijol y calabaza en policultivo; es la unidad básica de la agricultura maya yucateca. El kool no es solo un campo, sino un espacio ritualizado: su preparación implica pedir permiso a los dueños del monte, y su ciclo marca el calendario campesino. Las albarradas (koot) de piedra delimitan los kool y retienen la tierra. Landa cuenta que quemaban la maleza y, al llegar las lluvias, sembraban con un palo puntiagudo, poniendo cinco o seis granos en cada agujero."
+in_game_use = "Escenario principal del nivel 1; el jugador siembra, riega y defiende su kool durante cinco días."
+sources = PackedStringArray("CORDEMEX", "TERAN1994", "BASTARRACHEA1992", "LANDA", "REDFIELD1934")
