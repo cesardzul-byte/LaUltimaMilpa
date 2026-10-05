@@ -1,8 +1,12 @@
-[gd_resource type="Resource" script_class="LevelData" format=3]
+﻿[gd_resource type="Resource" script_class="LevelData" format=3]
 
 [ext_resource type="Script" path="res://src/levels/level_data.gd" id="1"]
 [ext_resource type="Resource" path="res://data/waves/wave_01.tres" id="2"]
-[ext_resource type="Script" path="res://src/waves/wave_data.gd" id="3"]
+[ext_resource type="Resource" path="res://data/waves/wave_02.tres" id="3"]
+[ext_resource type="Resource" path="res://data/waves/wave_03.tres" id="4"]
+[ext_resource type="Resource" path="res://data/waves/wave_04.tres" id="5"]
+[ext_resource type="Resource" path="res://data/waves/wave_05.tres" id="6"]
+[ext_resource type="Script" path="res://src/waves/wave_data.gd" id="7"]
 
 [resource]
 script = ExtResource("1")
@@ -14,7 +18,7 @@ night_duration = 110.0
 dawn_duration = 20.0
 days = 5
 boss_night = 5
-waves = Array[ExtResource("3")]([ExtResource("2")])
+waves = Array[ExtResource("7")]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
 max_water = 100
 starting_cacao = 30
 starting_inventory = Dictionary[StringName, int]({
