@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c1k207v8qjosb"]
+
+[ext_resource type="Script" uid="uid://5wv10kk5csj6" path="res://src/maya_numerals/maya_number.gd" id="1_script"]
+
+[node name="MayaNumber" type="Control" unique_id=679171992]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="ArabicLabel" type="Label" parent="." unique_id=1434823027]
+visible = false
+layout_mode = 0
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
