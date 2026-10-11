@@ -1,0 +1,158 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/maya_numerals/maya_number_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://src/maya_numerals/maya_number.tscn" id="2_number"]
+
+[node name="MayaNumberTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_test")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.5803922, 0.654902, 0.35686275, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 464.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 8
+text = "ISS-12 · Numeración maya (ver consola para PASS/FAIL)"
+
+[node name="Help" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 236.0
+offset_right = 464.0
+offset_bottom = 262.0
+theme_override_font_sizes/font_size = 8
+text = "Flechas arriba/abajo: En vivo +1/-1   Izquierda/derecha: -20/+20   T: alternar tutorial_active"
+
+[node name="Cases" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ZeroCaption" type="Label" parent="Cases"]
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 64.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+
+[node name="Zero" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 40.0
+offset_top = 64.0
+offset_right = 56.0
+offset_bottom = 72.0
+
+[node name="SevenCaption" type="Label" parent="Cases"]
+offset_left = 88.0
+offset_top = 48.0
+offset_right = 120.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "7"
+horizontal_alignment = 1
+
+[node name="Seven" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 96.0
+offset_top = 64.0
+offset_right = 112.0
+offset_bottom = 73.0
+value = 7
+
+[node name="NineteenCaption" type="Label" parent="Cases"]
+offset_left = 144.0
+offset_top = 48.0
+offset_right = 176.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "19"
+horizontal_alignment = 1
+
+[node name="Nineteen" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 152.0
+offset_top = 64.0
+offset_right = 168.0
+offset_bottom = 83.0
+value = 19
+
+[node name="TwentyCaption" type="Label" parent="Cases"]
+offset_left = 200.0
+offset_top = 48.0
+offset_right = 232.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "20"
+horizontal_alignment = 1
+
+[node name="Twenty" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 208.0
+offset_top = 64.0
+offset_right = 224.0
+offset_bottom = 78.0
+value = 20
+
+[node name="FortyFiveCaption" type="Label" parent="Cases"]
+offset_left = 256.0
+offset_top = 48.0
+offset_right = 288.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "45"
+horizontal_alignment = 1
+
+[node name="FortyFive" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 264.0
+offset_top = 64.0
+offset_right = 280.0
+offset_bottom = 74.0
+value = 45
+
+[node name="FourHundredCaption" type="Label" parent="Cases"]
+offset_left = 312.0
+offset_top = 48.0
+offset_right = 344.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "400"
+horizontal_alignment = 1
+
+[node name="FourHundred" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 336.0
+offset_bottom = 88.0
+value = 400
+
+[node name="LiveCaption" type="Label" parent="Cases"]
+offset_left = 368.0
+offset_top = 36.0
+offset_right = 432.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8
+text = "En vivo
+0"
+horizontal_alignment = 1
+
+[node name="Live" parent="Cases" instance=ExtResource("2_number")]
+offset_left = 392.0
+offset_top = 64.0
+offset_right = 408.0
+offset_bottom = 72.0
