@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CodexEntryData" format=3]
+
+[ext_resource type="Script" path="res://src/codex/codex_entry_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"waay"
+term = "wáay"
+pronunciation = "wáai"
+meaning = "Persona que por hechicería toma forma de animal para actuar de noche; una de las formas más comunes es la de perro. También es el espíritu compañero que cada persona tiene desde el nacimiento. El concepto es netamente maya: ya aparece en un glifo de las inscripciones del periodo Clásico, así que no es un préstamo nahua. En Chan Kom se cuentan muchas historias de wáay que rondan de noche y se les teme; la sal es el gran remedio contra ellos, y se dice que al final el wáay va a Metnal."
+in_game_use = "Nombre genérico de las criaturas nocturnas (Wáay Pek', Wáay Kot). Kisin, señor de Metnal, las envía cada noche a atacar el kool; al derrotarlas sueltan cacao."
+sources = PackedStringArray("CORDEMEX", "BRICKER1998", "HOUSTON1989", "REDFIELD1934")

@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://7uyqve240thq" path="res://src/levels/level_01_dzibilchaltun/milpa.tscn" id="1_v3ipw"]
 [ext_resource type="Script" uid="uid://bn5wscb558cov" path="res://src/day_cycle/day_cycle.gd" id="2_i7n8c"]
 [ext_resource type="Resource" path="res://data/levels/level_01.tres" id="3_3ypau"]
+[ext_resource type="Script" path="res://src/milpa/crops/plot_manager.gd" id="4_plots"]
 
 [node name="Level01" type="Node2D" unique_id=1571962930]
 
@@ -11,3 +12,6 @@
 [node name="DayCycle" type="Node" parent="." unique_id=1929601455]
 script = ExtResource("2_i7n8c")
 level = ExtResource("3_3ypau")
+
+[node name="PlotManager" type="Node" parent="."]
+script = ExtResource("4_plots")

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" path="res://src/waves/wave_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+creatures = Dictionary[StringName, int]({
+&"waay_pek": 5
+})
+spawn_interval = 7.0
