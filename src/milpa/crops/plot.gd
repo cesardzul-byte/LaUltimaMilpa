@@ -5,6 +5,7 @@ class_name Plot
 extends Node2D
 
 const FRAMES: int = 4 ## Semilla, brote, planta, madura.
+const TILE_SIZE: int = 16 ## px del tileset de la milpa; para la celda de crop_planted.
 
 ## Estado: crop (&"" = vacía), growth, dry_days, watered (hoy) y health.
 ## Es el mismo diccionario que está en GameState.world: modificarlo ya lo guarda.
@@ -55,7 +56,7 @@ func _try_plant(tool: StringName) -> void:
 	_load_crop()
 	state[&"health"] = _crop.max_health
 	_health.current_health = _crop.max_health
-	EventBus.crop_planted.emit(crop_id, Vector2i(global_position))
+	EventBus.crop_planted.emit(crop_id, Vector2i((global_position / TILE_SIZE).floor()))
 
 
 func _try_water() -> void:

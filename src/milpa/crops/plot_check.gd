@@ -10,12 +10,16 @@ const MAIN_SCENE: String = "res://src/main.tscn"
 var _failures: int = 0
 var _state: Node
 var _bus: Node
+var _errors: ErrorCounter = ErrorCounter.new()
+var _planted_cell: Vector2i = Vector2i(-1, -1)
 
 
 func _initialize() -> void:
 	# Este script se compila antes que los autoloads y no puede nombrarlos.
 	_state = root.get_node(^"GameState")
 	_bus = root.get_node(^"EventBus")
+	OS.add_logger(_errors)
+	_bus.crop_planted.connect(func(_id: StringName, cell: Vector2i) -> void: _planted_cell = cell)
 	_run.call_deferred()
 
 
@@ -36,6 +40,9 @@ func _run() -> void:
 	_expect(a.state[&"crop"] == &"maize", "E con maize_seed siembra maíz")
 	_expect(_state.inventory[&"maize_seed"] == 4, "quedan 4 semillas")
 	_expect(a.is_in_group(&"crops"), "la parcela sembrada está en el grupo crops")
+	var ground: TileMapLayer = current_scene.find_child("ground", true, false)
+	_expect(_planted_cell == ground.local_to_map(ground.to_local(a.global_position)),
+			"crop_planted envía la celda del tilemap (%s)" % _planted_cell)
 	_state.inventory[&"maize_seed"] = 0
 	_use(b, player)
 	_expect(b.state[&"crop"] == &"", "sin semillas no siembra")
@@ -99,12 +106,18 @@ func _run() -> void:
 	_expect(gained >= 3 and gained <= 5, "cosecha suma entre 3 y 5 maize (%d)" % gained)
 	_expect(a.state[&"crop"] == &"", "tras cosechar la parcela queda vacía")
 
-	# --- Golpe de criatura que deja la vida en 0 ---
+	# --- Golpe real de criatura (hitbox ENEMY) que deja la vida en 0 ---
 	player.active_tool = &"maize_seed"
 	_use(a, player)
-	a.get_node(^"HealthComponent").apply_damage(999)
-	await process_frame
-	_expect(a.state[&"crop"] == &"", "con vida 0 la parcela queda vacía")
+	await physics_frame # La hurtbox se activa diferida.
+	var hit: HitboxComponent = _enemy_hitbox(a.global_position, a.get_node(^"HealthComponent").current_health)
+	for i: int in 3:
+		await physics_frame
+	_expect(a.state[&"crop"] == &"", "un golpe de criatura que deja la vida en 0 vacía la parcela")
+	# Termina la invulnerabilidad con la hurtbox ya apagada: no debe dar error del motor.
+	await create_timer(a.get_node(^"HurtboxComponent").invulnerability_time + 0.1).timeout
+	hit.queue_free()
+	await physics_frame
 
 	# --- growth_days desde el .tres ---
 	var beans: Resource = load("res://data/crops/beans.tres") # Misma instancia en caché que usa Plot.
@@ -117,6 +130,7 @@ func _run() -> void:
 	await _to_next_morning()
 	_expect(a.state[&"growth"] >= beans.growth_days, "frijol maduro en %d día con growth_days cambiado" % beans.growth_days)
 
+	_expect(_errors.count == 0, "sin errores del motor (%d)" % _errors.count)
 	if _failures == 0:
 		print("plot_check OK")
 		quit(0)
@@ -137,6 +151,19 @@ func _use(plot: Node, player: Node) -> void:
 	plot.get_node(^"InteractableComponent").interacted.emit(player)
 
 
+## Hitbox de criatura sobre una parcela, como la del Wáay Pek'.
+func _enemy_hitbox(at: Vector2, damage: int) -> HitboxComponent:
+	var hitbox: HitboxComponent = HitboxComponent.new()
+	hitbox.team = HitboxComponent.Team.ENEMY
+	hitbox.damage = damage
+	var shape: CollisionShape2D = CollisionShape2D.new()
+	shape.shape = RectangleShape2D.new()
+	hitbox.add_child(shape)
+	hitbox.position = at
+	current_scene.add_child(hitbox)
+	return hitbox
+
+
 func _advance() -> void:
 	get_first_node_in_group(&"day_cycle").advance_phase()
 
@@ -153,3 +180,13 @@ func _expect(ok: bool, label: String) -> void:
 	if not ok:
 		_failures += 1
 		printerr("FALLA: " + label)
+
+
+## Cuenta los errores del motor (no las advertencias) para que también hagan fallar la verificación.
+class ErrorCounter extends Logger:
+	var count: int = 0
+
+	func _log_error(_function: String, _file: String, _line: int, _code: String, _rationale: String,
+			_editor_notify: bool, error_type: int, _script_backtraces: Array[ScriptBacktrace]) -> void:
+		if error_type != ERROR_TYPE_WARNING:
+			count += 1
