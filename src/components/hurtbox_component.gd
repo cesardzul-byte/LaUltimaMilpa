@@ -48,6 +48,8 @@ func _try_receive_hit(area: Area2D) -> bool:
 # Revisa las áreas aún solapadas; sin esto una hitbox persistente solo golpearía una vez.
 func _on_invulnerability_timeout() -> void:
 	is_invulnerable = false
+	if not monitoring:
+		return  # Apagada (p. ej. parcela vacía): no hay solapes que revisar.
 	for area: Area2D in get_overlapping_areas():
 		if _try_receive_hit(area):
 			break

@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/milpa/crops/plot.gd" id="1_plot"]
+[ext_resource type="Script" path="res://src/components/interactable_component.gd" id="2_inter"]
+[ext_resource type="Script" path="res://src/components/health_component.gd" id="3_health"]
+[ext_resource type="Script" path="res://src/components/hurtbox_component.gd" id="4_hurt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tile"]
+size = Vector2(16, 16)
+
+[node name="Plot" type="Node2D"]
+script = ExtResource("1_plot")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+hframes = 4
+
+[node name="InteractableComponent" type="Area2D" parent="."]
+script = ExtResource("2_inter")
+prompt_text = "Sembrar"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("RectangleShape2D_tile")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_health")
+max_health = 20
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+monitoring = false
+monitorable = false
+script = ExtResource("4_hurt")
+health_component = NodePath("../HealthComponent")
+team = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("RectangleShape2D_tile")
