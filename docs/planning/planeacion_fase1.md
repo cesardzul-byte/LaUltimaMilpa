@@ -298,6 +298,7 @@ Continúa [planeacion_fase0.md](planeacion_fase0.md): mismo equipo, mismo calend
 - [ ] Pulsando `attack` sin parar, el objetivo no recibe más de un golpe cada 0.6 s.
 - [ ] Una hurtbox de equipo `PLAYER` frente a Ya'ax no pierde vida.
 - [ ] El efecto aparece en la dirección del ataque en las 8 direcciones.
+- [ ] Al atacar, Ya'ax reproduce `attack` con los 3 cuadros de la fila y = 96 de `ya_ax.png`, volteada al atacar hacia la izquierda.
 - [ ] `damage`, `range` y `cooldown` son `@export` en `spear.tscn` con los valores del GDD §12.
 
 ---
