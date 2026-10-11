@@ -461,8 +461,9 @@ Continúa [planeacion_fase0.md](planeacion_fase0.md): mismo equipo, mismo calend
 - [ ] `ya_ax.png` mide 64×192, sin espacios entre cuadros, con una animación por fila en el orden de la guía.
 - [ ] En las filas con menos de 4 cuadros, los sobrantes son transparentes.
 - [ ] Solo usa colores de `paleta.png`.
-- [ ] Al ejecutar `milpa.tscn`, cada animación muestra sus cuadros y git no muestra cambios en `player.tscn`.
-- [ ] P4 aprueba en el PR que la ropa y la lanza no tienen elementos posteriores a la Conquista.
+- [ ] Al ejecutar `level_01.tscn`, Ya'ax muestra `idle` y las tres de caminar, y `use_tool` al pulsar E sobre una parcela; `hurt` y `die` se reproducen en el panel SpriteFrames de `player.tscn` sin guardar. La fila `attack` la conecta y comprueba ISS-15.
+- [ ] Git no muestra cambios en `player.tscn`.
+- [ ] P4 aprueba en el PR que Ya'ax viste taparrabo, manta de algodón y sandalias, y que la lanza tiene punta de pedernal, sin elementos posteriores a la Conquista.
 - [ ] Existe `art_source/characters/ya_ax.<ext>`.
 
 ---
