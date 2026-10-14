@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1")
-steps = Array[String]([])
+steps = Array[String](["Muévete con WASD o las flechas. Q cambia de herramienta y E la usa.", "En la Mañana, elige una semilla con Q y pulsa E en una parcela vacía.", "Riega con el cántaro cada día. Cuando la planta madure, cosecha con E.", "Pulsa E en el corral para dar maíz a los pavos. Si comen, dan plumas.", "Si una albarrada está dañada, pulsa E sobre ella para repararla con cacao.", "En la Tarde, comercia en la plaza o lleva la ofrenda al templo.", "Compra saka' en la plaza y ofrécelo en el altar del alux antes de la noche.", "En el Atardecer, con la antorcha activa, pulsa E en suelo libre para ponerla.", "De noche llegan los wáay de Kisin. Atácalos con la lanza: J o clic izquierdo.", "Al amanecer se rellena el agua y lees el resumen: concha 0, punto 1, barra 5."])
